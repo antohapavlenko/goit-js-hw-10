@@ -24,14 +24,15 @@ function getValue(event) {
         return Notify.info('Too many matches found. Please enter a more specific name.');
     }
 
+    if (getValue.length > 10) {
+        return Notify.failure('Oops, there is no country with that name.');
+    }
+
     fetchCountries(getValue)
     .then(value => {
+        
         if (!value) {
             return Notify.info('Please enter any character');
-        }
-
-        if (value.length > 10) {
-            return Notify.failure('Oops, there is no country with that name.');
         }
         parseValue(value)
     })
@@ -39,13 +40,16 @@ function getValue(event) {
         alert(error)})
 }
 
+
+
 function parseValue(result) {
-    countryInfo.innerHTML = ""
-    countriesList.innerHTML = ""
+    countryInfo.innerHTML = " "
+    countriesList.innerHTML = " "
 
    if (result.length === 1) {
     countryInfo.innerHTML = countryInfoTemplate(result)
    } else {
     countriesList.innerHTML = countriesListTemplate(result)
    }
+
 }
